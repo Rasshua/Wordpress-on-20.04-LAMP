@@ -5,27 +5,27 @@ Step by step installation Guide
 
 - Logging in as root
 
-```
-$ ssh root@your_server_ip
+```console
+ssh root@your_server_ip
 ```
 
 - Creating a new user
 
-```
-$ adduser sammy
+```console
+adduser sammy
 ```
 
 - Granting Administrative Privileges
 
-```
-$ usermod -aG sudo sammy
+```console
+usermod -aG sudo sammy
 ```
 
 - Setting Up a Basic Firewall
 
 Retrieve the list of available applications:
-```
-$ ufw app list
+```console
+ufw app list
 ```
 _Output:_
 ```
@@ -33,16 +33,16 @@ Available applications:
   OpenSSH
 ```
 Allow port 22 for SSH:
-```
-$ ufw allow OpenSSH
+```console
+ufw allow OpenSSH
 ```
 Enable firewall:
-```
-$ ufw enable
+```console
+ufw enable
 ```
 Check the status of UFW:
-```
-$ ufw status
+```console
+ufw status
 ```
 _Output:_
 ```
@@ -65,16 +65,16 @@ Via SSH
 ### 2.1-Installing Apache and Updating the Firewall
 
 - Update repositories:
-```
-$ sudo apt update
+```console
+sudo apt update
 ```
 - Install Apache2:
-```
-$ sudo apt install apache2
+```console
+sudo apt install apache2
 ```
 - Retrieve available applications from UFW:
-```
-$ sudo ufw app list
+```console
+sudo ufw app list
 ```
 _Output:_
 ```
@@ -84,12 +84,12 @@ Available applications:
   Apache S
 ```
 - Allow traffic on both ports 80 and 443:
-```
-$ sudo ufw allow in "Apache Full"
+```console
+sudo ufw allow in "Apache Full"
 ```
 - Verify the changes:
-```
-$ sudo ufw status
+```console
+sudo ufw status
 ```
 _Output:_
 ```
@@ -103,8 +103,8 @@ OpenSSH (v6)               ALLOW       Anywhere (v6)
 Apache Full (v6)           ALLOW       Anywhere (v6)
 ```
 - Restart UFW with new rules:
-```
-$ sudo ufw reload
+```console
+sudo ufw reload
 ```
 - Try to access the website in browser:
 ```
@@ -117,30 +117,30 @@ If everything is ok, the page like this appears:
 #### How To Find your Server’s Public IP Address___
 
 - via iproute tool (local IP address):
-```
-$ ip addr show ens3 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
+```console
+ip addr show ens3 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
 ```
 - via `curl` utility (external IP address):
-```
-$ curl http://icanhazip.com
+```console
+curl http://icanhazip.com
 ```
 ---
 
 ### 2.2-Installing MySQL
 
 - Install MySQL server:
-```
-$ sudo apt install mysql-server
+```console
+sudo apt install mysql-server
 ```
 The following steps are intended to prevent error during mysql_secure_installation script execution:
 
 1. Open up the MySQL prompt:
-```
-$ sudo mysql
+```console
+sudo mysql
 ```
 2. Change the root user’s authentication method to one that uses a password:
-```   
-mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
 3. Exit the MySQL prompt:
 ```
@@ -148,7 +148,7 @@ mysql> exit
 ```
 - Start the interactive script for database password protection:
 ```
-$ sudo mysql_secure_installation
+sudo mysql_secure_installation
 ```
 _Output:_
 ```
@@ -173,7 +173,7 @@ For the rest of the questions, press Y and hit the ENTER key at each prompt.
 
 - Test whether you’re able to log in to the MySQL console:
 ```
-$ sudo mysql
+sudo mysql
 ```
 _Output:_
 ```
@@ -201,7 +201,7 @@ mysql> exit
 
 - Install the minimal necessary packages:
 ```
-$ sudo apt install php libapache2-mod-php php-mysql
+sudo apt install php libapache2-mod-php php-mysql
 ``` 
 - Confirm your PHP version:
 ```
@@ -221,7 +221,7 @@ In some cases, you’ll want to modify the way that Apache serves files when a d
 
 1. Open the configuration file in the text editor:
 ```
-$ sudo nano /etc/apache2/mods-enabled/dir.conf
+sudo nano /etc/apache2/mods-enabled/dir.conf
 ```
 _File content (`index.html` is first in queue):
 ```
@@ -237,7 +237,7 @@ _File content (`index.html` is first in queue):
 ```
 3. Save changes and than restart the Apache server:
 ```
-$ sudo systemctl restart apache2
+sudo systemctl restart apache2
 ```
 ---
 
@@ -247,15 +247,15 @@ When using the Apache web server, you can create virtual hosts to encapsulate co
 
 - Create the directory for your_domain
 ```
-$ sudo mkdir /var/www/your_domain
+sudo mkdir /var/www/your_domain
 ```
 - Assign ownership of the directory with the $USER environment variable, which will reference your current system user:
 ```
-$ sudo chown -R $USER:$USER /var/www/your_domain
+sudo chown -R $USER:$USER /var/www/your_domain
 ```
 - Open a new configuration file in Apache’s `sites-available` directory:
 ```
-$ sudo nano /etc/apache2/sites-available/your_domain.conf
+sudo nano /etc/apache2/sites-available/your_domain.conf
 ```
 - Add in the following bare-bones configuration with your own domain name:
 ```
@@ -272,21 +272,21 @@ Save and close the file when you’re done.
 
 - Use `a2ensite` to enable the new virtual host:
 ```
-$ sudo a2ensite your_domain
+sudo a2ensite your_domain
 ```
 - Disable the default website that comes installed with Apache (this is required if you’re not using a custom domain name, because in this case Apache’s default configuration would override your virtual host):
 ```
-$ sudo a2dissite 000-default
+sudo a2dissite 000-default
 ```
 - Make sure your configuration file doesn’t contain syntax errors:
 ```
-$ sudo apache2ctl configtest
+sudo apache2ctl configtest
 ```
 If `Syntax OK` appears in output, everything is OK.
 
 - Reload Apache so these changes take effect:
 ```
-$ sudo systemctl reload apache2
+sudo systemctl reload apache2
 ```
 ---
 
@@ -294,7 +294,7 @@ $ sudo systemctl reload apache2
 
 - Create a new file named info.php inside your custom web root folder:
 ```
-$ nano /var/www/your_domain/info.php
+nano /var/www/your_domain/info.php
 ```
 - Add the following text, which is valid PHP code, inside the blank file:
 ```php
