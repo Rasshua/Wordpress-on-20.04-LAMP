@@ -5,37 +5,41 @@ Step by step installation Guide
 
 ### 1-Logging in as root
 
-ssh root@your_server_ip
+```ssh root@your_server_ip```
 
 ### 2-Creating a new user
 
-adduser sammy
+```adduser sammy```
 
 ### 3-Granting Administrative Privileges
 
-usermod -aG sudo sammy
+```usermod -aG sudo sammy```
 
 ### 4-Setting Up a Basic Firewall
 
-ufw app list
+```ufw app list```
 
 Output:
+```
 Available applications:
   OpenSSH
+```
 
-ufw allow OpenSSH
+```ufw allow OpenSSH```
 
-ufw enable
+```ufw enable```
 
-ufw status
+```ufw status```
 
 Output:
+```
 Status: active
 
 To                         Action      From
 --                         ------      ----
 OpenSSH                    ALLOW       Anywhere
 OpenSSH (v6)               ALLOW       Anywhere (v6)
+```
 
 ### 5-Enabling External Access for Your Regular User
 
