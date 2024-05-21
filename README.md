@@ -143,11 +143,11 @@ sudo mysql
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
 3. Exit the MySQL prompt:
-```
-mysql> exit
+```sql
+exit
 ```
 - Start the interactive script for database password protection:
-```
+```console
 sudo mysql_secure_installation
 ```
 _Output:_
@@ -172,7 +172,7 @@ Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG: 1
 For the rest of the questions, press Y and hit the ENTER key at each prompt.
 
 - Test whether you’re able to log in to the MySQL console:
-```
+```console
 sudo mysql
 ```
 _Output:_
@@ -192,19 +192,19 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 mysql>
 ```
 - Exit the MySQL console:
-```
-mysql> exit
+```sql
+exit
 ```
 ---
 
 ### 2.3-Installing PHP
 
 - Install the minimal necessary packages:
-```
+```console
 sudo apt install php libapache2-mod-php php-mysql
 ``` 
 - Confirm your PHP version:
-```
+```console
 php -v
 ```
 _Output (example):_
@@ -220,7 +220,7 @@ Zend Engine v3.4.0, Copyright (c) Zend Technologies
 In some cases, you’ll want to modify the way that Apache serves files when a directory is requested. By default, when the user accesses website, Apache tries to execute `index.html` file first. It's possible to modify default directory index so Apache will serve `index.php` first.
 
 1. Open the configuration file in the text editor:
-```
+```console
 sudo nano /etc/apache2/mods-enabled/dir.conf
 ```
 _File content (`index.html` is first in queue):
@@ -236,7 +236,7 @@ _File content (`index.html` is first in queue):
 </IfModule>
 ```
 3. Save changes and than restart the Apache server:
-```
+```console
 sudo systemctl restart apache2
 ```
 ---
@@ -246,15 +246,15 @@ sudo systemctl restart apache2
 When using the Apache web server, you can create virtual hosts to encapsulate configuration details and host more than one domain from a single server. In this example, we’ll set up a domain called `your_domain`, but you should replace this with your own domain name.
 
 - Create the directory for your_domain
-```
+```console
 sudo mkdir /var/www/your_domain
 ```
 - Assign ownership of the directory with the $USER environment variable, which will reference your current system user:
-```
+```console
 sudo chown -R $USER:$USER /var/www/your_domain
 ```
 - Open a new configuration file in Apache’s `sites-available` directory:
-```
+```console
 sudo nano /etc/apache2/sites-available/your_domain.conf
 ```
 - Add in the following bare-bones configuration with your own domain name:
@@ -271,21 +271,21 @@ sudo nano /etc/apache2/sites-available/your_domain.conf
 Save and close the file when you’re done.
 
 - Use `a2ensite` to enable the new virtual host:
-```
+```console
 sudo a2ensite your_domain
 ```
 - Disable the default website that comes installed with Apache (this is required if you’re not using a custom domain name, because in this case Apache’s default configuration would override your virtual host):
-```
+```console
 sudo a2dissite 000-default
 ```
 - Make sure your configuration file doesn’t contain syntax errors:
-```
+```console
 sudo apache2ctl configtest
 ```
 If `Syntax OK` appears in output, everything is OK.
 
 - Reload Apache so these changes take effect:
-```
+```console
 sudo systemctl reload apache2
 ```
 ---
@@ -293,7 +293,7 @@ sudo systemctl reload apache2
 ### 2.4-Testing PHP processing on the website
 
 - Create a new file named info.php inside your custom web root folder:
-```
+```console
 nano /var/www/your_domain/info.php
 ```
 - Add the following text, which is valid PHP code, inside the blank file:
