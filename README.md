@@ -60,7 +60,7 @@ Via SSH
 
 ---
 
-## 2. Install Linux, Apache, MySQL, PHP (LAMP) Stack components
+## 2. Install LAMP Stack components - Apache, MySQL and PHP
 
 ### 2.1-Installing Apache and Updating the Firewall
 
@@ -116,7 +116,7 @@ If everything is ok, the page like this appears:
 
 #### How To Find your Server’s Public IP Address___
 
-- via iproute tool (local IP address):
+- via `iproute` tool (local IP address):
 ```console
 ip addr show ens3 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
 ```
@@ -311,6 +311,97 @@ http://server_domain_or_IP/info.php
 If everything is ok, default PHP page appears:
 
 ![PHP](https://github.com/Rasshua/Wordpress-on-20.04-LAMP/blob/main/assets/php.png)
+
+- After checking the relevant information about your PHP server through that page, it’s best to remove the file you created as it contains sensitive information:
+```console
+sudo rm /var/www/your_domain/info.php
+```
+---
+
+## 3. Install Wordpress
+
+### 3.1-Creating a MySQL Database and User for WordPress
+
+- Login to the root account in MySQL as regular Linux user:
+
+```console
+mysql -u root -p
+```
+- Create database for Wordpress (`wordpress` in example):
+```sql
+CREATE DATABASE wordpress DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+```
+- Create user for Wordpress (`wordpressuser` in example, `password` must be substituted with particular value):
+```sql
+CREATE USER 'wordpressuser'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+```
+- Grant all access to database for Wordpress user:
+```sql
+GRANT ALL ON wordpress.* TO 'wordpressuser'@'%';
+```
+- Refresh privileges:
+```sql
+FLUSH PRIVILEGES;
+```
+- Exit MySQL:
+```sql
+exit
+```
+---
+
+### 3.2-Install additional extensions for PHP
+
+- Update repositories:
+```console
+sudo apt update
+```
+- Install PHP extensions:
+```console
+sudo apt install php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip
+```
+- Restart Apache server:
+```console
+sudo systemctl restart apache2
+```
+---
+
+### 3.3-Setting up Apache configuration to gain access to .htaccess override and rewrite
+
+We will use `/etc/apache2/sites-available/wordpress.conf` as an example and you need to replace the path to your configuration file in the appropriate location. We will also use `/var/www/wordpress` as the root directory for our WordPress installation. You must use the root web site specified in your own configuration.
+
+- Open the configuration file of Apache server for yout website:
+```console
+sudo nano /etc/apache2/sites-available/wordpress.conf
+```
+- Add the following text block inside the `VirtualHost` block in your configuration file, making sure you are using the correct web root directory:
+```
+<Directory /var/www/wordpress/>
+	AllowOverride All
+</Directory>
+```
+Save the file and exit editor.
+
+- Activate the rewrite module to use permalinks in WordPress:
+```console
+sudo a2enmod rewrite
+```
+This will give you easier-to-read permalinks for your posts, as shown:
+```
+http://example.com/2012/post-name/
+http://example.com/2012/12/30/post-name
+```
+- Check syntax:
+```console
+sudo apache2ctl configtest
+```
+- Restart Apache server:
+```console
+sudo systemctl restart apache2
+```
+---
+
+
+
 
 
 
