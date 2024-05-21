@@ -153,7 +153,7 @@ secure enough. Would you like to setup VALIDATE PASSWORD plugin?
 
 Press y|Y for Yes, any other key for No:
 ```
-Click Y (Yes) and then select the level of password validation policy (2 - MEDIUM is recommended):
+Click Y (Yes) and then select the level of password validation policy (1 - MEDIUM is acceptable):
 ```
 There are three levels of password validation policy:
 
