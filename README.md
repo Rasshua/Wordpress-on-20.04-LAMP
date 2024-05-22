@@ -259,6 +259,7 @@ sudo nano /etc/apache2/sites-available/your_domain.conf
     ServerAlias www.your_domain
     ServerAdmin webmaster@localhost
     DocumentRoot /var/www/your_domain
+
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
