@@ -75,7 +75,8 @@ _Output:_
 Available applications:
   Apache
   Apache Full
-  Apache S
+  Apache Secure
+  OpenSSH
 ```
 4. Allow traffic on both ports 80 and 443:
 ```console
