@@ -520,7 +520,29 @@ define('FS_METHOD', 'direct');
 
 ### 3.6-Completing installation via the web interface
 
+1. Go to your web server address in your browser:
+```
+https://your_domain_or_IP
+```
+2. Select the desired language:
 
+![Select_language](https://github.com/Rasshua/Wordpress-on-20.04-LAMP/blob/main/assets/select_lang.png)
+
+4. Specify `site name`, `user name`, `password` and `email address`. Also you may enable or disable indexing of your site by search engines:
+
+![Setup_installation](https://github.com/Rasshua/Wordpress-on-20.04-LAMP/blob/main/assets/setup_installation.png)
+
+5. Click `Install WordPress` when ready, login prompt opens:
+
+![Login_prompt](https://github.com/Rasshua/Wordpress-on-20.04-LAMP/blob/main/assets/login_prompt.png)
+
+Enter your credentials and then click Log In, Dashboard webpage of WordPress appears:
+
+![Admin_screen](https://github.com/Rasshua/Wordpress-on-20.04-LAMP/blob/main/assets/admin_screen.png)
+
+At this point you can start developing your WordPress website.
+
+Good luck! :smiley:
 
 ---
 Reference: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-on-ubuntu-20-04-with-a-lamp-stack-ru)
