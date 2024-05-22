@@ -429,9 +429,9 @@ sudo cp -a /tmp/wordpress/. /var/www/your_domain
 
 1. Setting up smart ownership and permissions:
 ```console
-sudo chown -R www-data:www-data /var/www/wordpress
-sudo find /var/www/wordpress/ -type d -exec chmod 750 {} \;
-sudo find /var/www/wordpress/ -type f -exec chmod 640 {} \;
+sudo chown -R www-data:www-data /var/www/your_domain
+sudo find /var/www/your_domain/ -type d -exec chmod 750 {} \;
+sudo find /var/www/your_domain/ -type f -exec chmod 640 {} \;
 ```
 2. Setting up the WordPress configuration file:
 
