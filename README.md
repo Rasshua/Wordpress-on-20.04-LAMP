@@ -286,7 +286,7 @@ sudo systemctl reload apache2
 ```
 ---
 
-### 2.4-Testing PHP processing on the website
+### 2.5-Testing PHP processing on the website
 
 1. Create a new file named info.php inside your custom web root folder:
 ```console
